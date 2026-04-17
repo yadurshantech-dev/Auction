@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🏏 IPL Auction Arena</title>
+  <link rel="icon" type="image/jpg" href="/images/ui/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-mark">🏏</div>
+      <div class="header-titles">
+        <h1 class="app-title">IPL AUCTION ARENA</h1>
+        <span class="app-subtitle">SEASON 2025 · LIVE BIDDING</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="auction-progress" id="auctionProgress">
+        <span class="progress-label">PLAYERS</span>
+        <span class="progress-count" id="progressCount">0 / 100</span>
+      </div>
+      <button class="btn-icon" id="btnPause" title="Pause / Resume">
+        <span id="pauseIcon">⏸</span>
+      </button>
+      <button class="btn-icon" id="btnDarkMode" title="Toggle Theme">🌙</button>
+      <button class="btn-icon btn-danger" id="btnReset" title="Reset Auction">↺</button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN LAYOUT ===== -->
+  <main class="app-main">
+
+    <!-- LEFT: Teams Panel -->
+    <aside class="teams-panel" id="teamsPanel">
+      <div class="panel-header">
+        <h2 class="panel-title">FRANCHISES</h2>
+        <span class="panel-subtitle">PURSE · SQUAD</span>
+      </div>
+      <div class="teams-list" id="teamsList">
+        <!-- Rendered by UI -->
+      </div>
+    </aside>
+
+    <!-- CENTER: Auction Stage -->
+    <section class="auction-stage">
+
+      <!-- Player Card -->
+      <div class="player-card" id="playerCard">
+        <div class="player-category-badge" id="playerCategory">BATSMAN</div>
+        <div class="player-image-wrap">
+          <img class="player-image" id="playerImage" src="images/ui/default.jpg" alt="Player" />
+          <div class="player-image-glow"></div>
+          <div class="country-flag" id="countryFlag"></div>
+        </div>
+        <div class="player-info">
+          <h2 class="player-name" id="playerName">---</h2>
+          <div class="player-role" id="playerRole">Waiting…</div>
+          <div class="player-base-price">
+            BASE PRICE: <strong id="playerBasePrice">---</strong>
+          </div>
+        </div>
+        <div class="bid-display">
+          <div class="bid-current">
+            <span class="bid-label">CURRENT BID</span>
+            <span class="bid-amount" id="currentBid">₹0</span>
+          </div>
+          <div class="bid-leader">
+            <span class="leader-label">LEADING</span>
+            <span class="leader-team" id="leadingTeam">---</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer-wrap" id="timerWrap">
+        <svg class="timer-ring" viewBox="0 0 120 120">
+          <circle class="timer-ring-bg" cx="60" cy="60" r="52"/>
+          <circle class="timer-ring-fill" cx="60" cy="60" r="52" id="timerRingFill"/>
+        </svg>
+        <div class="timer-inner">
+          <span class="timer-seconds" id="timerSeconds">6</span>
+          <span class="timer-unit">SEC</span>
+        </div>
+      </div>
+
+      <!-- Auction Controls -->
+      <div class="auction-controls" id="auctionControls">
+        <button class="btn-skip" id="btnSkip">PASS UNSOLD</button>
+        <span class="next-label" id="nextLabel">NEXT: ---</span>
+      </div>
+
+    </section>
+
+    <!-- RIGHT: Bid Buttons + Log -->
+    <aside class="bid-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">PLACE BID</h2>
+        <span class="panel-subtitle" id="bidIncLabel">+10L per click</span>
+      </div>
+      <div class="bid-buttons-grid" id="bidButtonsGrid">
+        <!-- Rendered by UI -->
+      </div>
+
+      <!-- Auction Log -->
+      <div class="log-section">
+        <div class="panel-header log-head">
+          <h2 class="panel-title">AUCTION LOG</h2>
+          <button class="btn-clear-log" id="btnClearLog">CLEAR</button>
+        </div>
+        <ul class="auction-log" id="auctionLog">
+          <li class="log-entry log-info">Auction ready. Press BID to start!</li>
+        </ul>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ===== SOLD OVERLAY ===== -->
+  <div class="sold-overlay" id="soldOverlay">
+    <div class="sold-content">
+      <div class="sold-fireworks" id="soldFireworks"></div>
+      <div class="sold-banner">
+        <span class="sold-label">S O L D !</span>
+        <div class="sold-player-name" id="soldPlayerName">Virat Kohli</div>
+        <div class="sold-team" id="soldTeam">Mumbai Marlins</div>
+        <div class="sold-price" id="soldPrice">₹16.25 Cr</div>
+        <div class="sold-hammer">🔨</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== UNSOLD OVERLAY ===== -->
+  <div class="unsold-overlay" id="unsoldOverlay">
+    <div class="unsold-content">
+      <div class="unsold-label">UNSOLD</div>
+      <div class="unsold-player" id="unsoldPlayerName">Player Name</div>
+    </div>
+  </div>
+
+  <!-- ===== START SCREEN ===== -->
+  <div class="start-screen" id="startScreen">
+    <div class="start-content">
+      <div class="start-logo">🏏</div>
+      <h1 class="start-title">IPL AUCTION ARENA</h1>
+      <p class="start-subtitle">Season 2025 · 100 Players · 8 Franchises</p>
+      <div class="start-meta">
+        <div class="meta-item">
+          <span class="meta-value">₹90 Cr</span>
+          <span class="meta-label">Per Team Purse</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-value">100</span>
+          <span class="meta-label">Total Players</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-value">6s</span>
+          <span class="meta-label">Bid Timer</span>
+        </div>
+      </div>
+      <button class="btn-start" id="btnStart">⚡ START AUCTION</button>
+    </div>
+  </div>
+
+  <!-- ===== TEAM DETAIL MODAL ===== -->
+  <div class="modal-overlay" id="teamModal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h2 class="modal-title" id="modalTeamName">---</h2>
+      <div class="modal-purse" id="modalTeamPurse">Purse: ---</div>
+      <ul class="modal-players" id="modalPlayerList"></ul>
+    </div>
+  </div>
+
+  <!-- SCRIPTS (order matters) -->
+  <script src="js/state.js"></script>
+  <script src="js/players.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/auction.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
