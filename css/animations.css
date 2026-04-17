@@ -1,0 +1,153 @@
+/* ============================================================
+   animations.css — Keyframes and animation utilities
+   ============================================================ */
+
+/* ---- Card entrance ---- */
+@keyframes cardEnterFade {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.card-enter {
+  animation: cardEnterFade 0.4s cubic-bezier(0.34,1.2,0.64,1) forwards;
+}
+
+/* ---- Bid amount pulse ---- */
+@keyframes bidPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18); text-shadow: 0 0 20px rgba(255,215,0,0.8); }
+  100% { transform: scale(1); }
+}
+
+.bid-pulse {
+  animation: bidPulse 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ---- Timer critical pulse ---- */
+@keyframes timerPulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+/* ---- SOLD banner entry ---- */
+@keyframes soldBannerIn {
+  from { opacity: 0; transform: scale(0.7) rotateX(-20deg); }
+  to   { opacity: 1; transform: scale(1) rotateX(0deg); }
+}
+
+/* ---- SOLD gold glow ---- */
+@keyframes soldGlow {
+  from { text-shadow: 0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,215,0,0.2); }
+  to   { text-shadow: 0 0 60px rgba(255,215,0,0.9), 0 0 120px rgba(255,215,0,0.5), 0 0 200px rgba(255,150,0,0.3); }
+}
+
+/* ---- Hammer swing ---- */
+@keyframes hammerSwing {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-30deg) scale(1.2); }
+  60%  { transform: rotate(20deg) scale(0.9); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ---- Firework particles — keyframes injected by JS (fw_burst) ---- */
+.firework-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  /* animation set inline by JS */
+}
+
+/* ---- Float animation (start screen ball) ---- */
+@keyframes floatBall {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* ---- Log entry slide in ---- */
+@keyframes logSlideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- Flash insufficient funds ---- */
+@keyframes flashRed {
+  0%   { background: var(--bg-surface); border-color: var(--border); }
+  50%  { background: rgba(255,59,59,0.25); border-color: var(--red); }
+  100% { background: var(--bg-surface); border-color: var(--border); }
+}
+
+/* ---- Team badge glow on leading ---- */
+@keyframes teamLeadingPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--team-color); }
+  50%       { box-shadow: 0 0 24px var(--team-color), 0 0 48px var(--team-color); }
+}
+
+.team-item.team-leading .team-badge {
+  animation: teamLeadingPulse 2s ease infinite;
+}
+
+/* ---- Button hover lift ---- */
+@keyframes btnLift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-2px); }
+}
+
+/* ---- Countdown ring colors via CSS transitions ---- */
+.timer-ring-fill {
+  transition: stroke-dashoffset 0.95s linear, stroke 0.4s ease;
+}
+
+/* ---- Bid button press ---- */
+.bid-btn:active:not(:disabled) {
+  animation: btnPress 0.12s ease;
+}
+@keyframes btnPress {
+  0%  { transform: scale(1); }
+  50% { transform: scale(0.96); }
+  100%{ transform: scale(1); }
+}
+
+/* ---- Pause overlay ripple ---- */
+@keyframes pauseRipple {
+  from { opacity: 0.6; transform: scale(0.8); }
+  to   { opacity: 0; transform: scale(2); }
+}
+
+/* ---- Start screen text entrance ---- */
+.start-content > * {
+  animation: cardEnterFade 0.5s ease both;
+}
+.start-logo       { animation-delay: 0.0s; }
+.start-title      { animation-delay: 0.1s; }
+.start-subtitle   { animation-delay: 0.2s; }
+.start-meta       { animation-delay: 0.3s; }
+.btn-start        { animation-delay: 0.4s; }
+
+/* ---- Shine sweep effect on SOLD label ---- */
+@keyframes shineSweep {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.sold-label {
+  background: linear-gradient(
+    90deg,
+    #FFD700 0%,
+    #FFFDE0 40%,
+    #FFD700 50%,
+    #FFFDE0 60%,
+    #FFD700 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineSweep 2s linear infinite, soldGlow 1.5s ease infinite alternate;
+}
+
+/* Override: soldGlow won't work on transparent text, keep just the shine */
+@keyframes soldGlow {
+  from {}
+  to   {}
+}

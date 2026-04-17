@@ -1,0 +1,228 @@
+/* ============================================================
+   responsive.css — Mobile-first responsive layout
+   Breakpoints: 480 | 768 | 1024 | 1280
+   ============================================================ */
+
+/* ---- Mobile base (< 768px): single column stack ---- */
+@media (max-width: 767px) {
+
+  :root {
+    --header-h: 56px;
+    --timer-size: 110px;
+  }
+
+  .app-header {
+    padding: 0 14px;
+  }
+
+  .app-title { font-size: 20px; letter-spacing: 2px; }
+  .app-subtitle { display: none; }
+  .auction-progress { display: none; }
+
+  /* Stack vertically */
+  .app-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Teams panel becomes horizontal scroll strip on mobile */
+  .teams-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: none;
+    overflow: hidden;
+  }
+
+  .teams-panel .panel-header { display: none; }
+
+  .teams-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px;
+    gap: 6px;
+    max-height: auto;
+    scrollbar-width: thin;
+  }
+
+  .teams-list::-webkit-scrollbar { height: 3px; }
+
+  .team-item {
+    flex-shrink: 0;
+    width: 130px;
+    min-width: 130px;
+  }
+
+  .team-item::before { display: none; }
+
+  .team-purse-bar-wrap { display: none; }
+
+  /* Auction stage */
+  .auction-stage {
+    padding: 16px 12px;
+    gap: 14px;
+  }
+
+  .player-card { max-width: 100%; }
+  .player-image-wrap { height: 180px; }
+  .player-name { font-size: 24px; }
+  .bid-amount { font-size: 24px; }
+  .leader-team { font-size: 20px; }
+
+  .auction-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .btn-skip { text-align: center; }
+  .next-label { text-align: center; }
+
+  /* Bid panel */
+  .bid-panel {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .bid-buttons-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-height: none;
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .bid-btn {
+    padding: 10px 4px;
+  }
+
+  .bid-btn-name { display: none; }
+  .bid-btn-purse { font-size: 10px; }
+  .bid-btn-short { font-size: 18px; }
+
+  .log-section {
+    min-height: 200px;
+    max-height: 300px;
+  }
+}
+
+/* ---- Small mobile (< 480px) ---- */
+@media (max-width: 479px) {
+  .bid-buttons-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .app-title { font-size: 17px; letter-spacing: 1px; }
+  .header-right { gap: 6px; }
+  .btn-icon { width: 32px; height: 32px; font-size: 14px; }
+
+  .player-image-wrap { height: 150px; }
+  .player-name { font-size: 20px; }
+  .sold-label { letter-spacing: 6px; }
+}
+
+/* ---- Tablet (768px – 1023px): 2-column layout ---- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-main {
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto 1fr;
+    height: calc(100vh - var(--header-h));
+    overflow: hidden;
+  }
+
+  /* Teams panel on left, full height */
+  .teams-panel {
+    grid-row: 1 / 3;
+  }
+
+  /* Auction stage top-right */
+  .auction-stage {
+    grid-column: 2;
+    grid-row: 1;
+    overflow-y: auto;
+  }
+
+  /* Bid panel bottom-right */
+  .bid-panel {
+    grid-column: 2;
+    grid-row: 2;
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  .bid-buttons-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-height: none;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .log-section {
+    width: 260px;
+    flex-shrink: 0;
+    border-top: none;
+    border-left: 1px solid var(--border);
+  }
+
+  .bid-panel > .panel-header {
+    display: none; /* header is in bid-section row */
+  }
+}
+
+/* ---- Desktop (1024px+): 3-column layout (default) ---- */
+@media (min-width: 1024px) {
+  .app-main {
+    height: calc(100vh - var(--header-h));
+    overflow: hidden;
+  }
+
+  /* Ensure columns don't collapse */
+  .teams-panel  { overflow-y: hidden; }
+  .auction-stage { overflow-y: auto; }
+  .bid-panel    { overflow-y: hidden; }
+}
+
+/* ---- Wide Desktop (1280px+) ---- */
+@media (min-width: 1280px) {
+  .app-main {
+    grid-template-columns: 280px 1fr 340px;
+  }
+
+  .player-image-wrap { height: 260px; }
+  .player-name { font-size: 36px; }
+  .bid-buttons-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---- Extra wide (1600px+) ---- */
+@media (min-width: 1600px) {
+  .app-main {
+    grid-template-columns: 300px 1fr 360px;
+  }
+
+  .player-image-wrap { height: 300px; }
+  .bid-btn-name { display: block; }
+}
+
+/* ---- Touch device tweaks ---- */
+@media (hover: none) and (pointer: coarse) {
+  .bid-btn { min-height: 64px; }
+  .btn-skip { min-height: 44px; }
+  .btn-icon { min-width: 40px; min-height: 40px; }
+  .team-item { min-height: 56px; }
+
+  /* Disable hover transforms on touch */
+  .bid-btn:hover:not(:disabled) { transform: none; }
+  .team-item:hover { transform: none; }
+}
+
+/* ---- Print (hide most things) ---- */
+@media print {
+  .app-header, .bid-panel, .teams-panel, .sold-overlay, .unsold-overlay { display: none; }
+  .auction-stage { padding: 0; }
+}
